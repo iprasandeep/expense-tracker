@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.success) {
           alert("Sign up successful");
         } else {
-          alert("Sign up failed");
+          alert("User already exists");
         }
       } catch (error) {
         console.error("Error:", error);

@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.success) {
           alert("Login successful");
         } else {
-          alert("Login failed");
+          alert("Wrong username and password");
         }
       } catch (error) {
         console.error("Error:", error);
