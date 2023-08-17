@@ -30,9 +30,8 @@ app.post('/signup', async (req, res) => {
       // check if user already exists
       const existingUser = await User.findOne({ where: { email } });
       if (existingUser) {
-        return res.json({ success: false, message: 'User already exists' });
+        return res.status(403).json({ success: false, message: 'User already exists' });
       }
-  
       // create a new user does not exist
       const newUser = await User.create({ name, email, password });
       res.json({ success: true });
@@ -54,9 +53,8 @@ app.post('/login', async (req, res) => {
       }
   
       if (user.password !== password || user.email !== email) {
-        return res.json({ success: false, message: 'Wrong mail id or passowrd!' });
+        return res.status(401).json({ success: false, message: 'Wrong mail id or passowrd!' });
       }
-  
       res.json({ success: true });
     } catch (error) {
       console.error('Error querying database:', error);
