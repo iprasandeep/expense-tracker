@@ -7,14 +7,21 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Sign Up</h1>
+<div class="signup-container" >
+  <h1 class="title">Sign Up</h1>
   <form id="signup-form">
-    <input type="text" name="name" placeholder="Name" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <button type="submit">Sign Up</button>
+    <label for="name">Name: </label>
+    <input type="text" name="name" placeholder="Name"required><br>
+    <label for="email">Email: </label>
+    <input type="email" name="email" placeholder="Email" equired><br>
+    <label for="password">Password: </label>
+    <input type="password" name="password" placeholder="Password" required><br>
+    <button class="btn" type="submit">Sign Up</button>
   </form>
-  <span>Already have an account?</span><a href="login.html">Login</a>
+  <div id="message" class="message"></div>
+  <span class="msg">Already have an account?</span><a href="login.html">Login</a>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
   <script src="signup.js"></script>
 </body>
 </html>

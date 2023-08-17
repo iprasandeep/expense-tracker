@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const signupForm = document.getElementById("signup-form");
+    const messageElement = document.getElementById("message");
     
     signupForm.addEventListener("submit", async function (e) {
       e.preventDefault();
@@ -8,25 +9,23 @@ document.addEventListener("DOMContentLoaded", function () {
       const name = formData.get("name");
       const email = formData.get("email");
       const password = formData.get("password");
-  
+
       try {
-        const response = await fetch("/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email, password }),
-        });
+        const response = await axios.post("/signup", { name, email, password });
   
-        const data = await response.json();
-  
-        if (data.success) {
-          alert("Sign up successful");
+        if (response.data.success) {
+          messageElement.textContent = "Sign up successful"; 
+          messageElement.style.color = "green";
         } else {
-          alert("User already exists");
+          messageElement.textContent = response.data.message;
+          messageElement.style.color = "red";
+        //   alert(response.data.message)
         }
       } catch (error) {
         console.error("Error:", error);
+        messageElement.style.color = "red";
+        messageElement.textContent = "An error occurred";
+       
       }
     });
   });
