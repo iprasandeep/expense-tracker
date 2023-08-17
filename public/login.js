@@ -15,6 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
       if (response.data.success) {
         messageElement.textContent = "Login successful"; 
         messageElement.style.color = "green";
+        window.location.href = "/expense.html";
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 1000); // Delay in milliseconds
       } else {
         messageElement.textContent = response.data.message; 
         messageElement.style.color = "red";

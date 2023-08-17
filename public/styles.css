@@ -26,3 +26,40 @@ body {
     font-size: 14px;
     margin-top: 10px;
   }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  #expense-form {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    max-width: 400px;
+  }
+  
+  #expense-list {
+    margin: 20px auto;
+    max-width: 400px;
+  }
+  
+  .expense-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    float: right;
+  }
+  

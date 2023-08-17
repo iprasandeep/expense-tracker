@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.data.success) {
           messageElement.textContent = "Sign up successful"; 
           messageElement.style.color = "green";
+        //   window.location.href = "/login.html";
         } else {
           messageElement.textContent = response.data.message;
           messageElement.style.color = "red";
