@@ -15,6 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
       if (response.data.success) {
         messageElement.textContent = "Login successful"; 
         messageElement.style.color = "green";
+        const token = response.data.token; 
+        document.cookie = `token=${token}; expires=; path=/`;
+        
+        localStorage.setItem("token", response.data.token);
         window.location.href = "/expense.html";
         // setTimeout(() => {
         //   window.location.reload();

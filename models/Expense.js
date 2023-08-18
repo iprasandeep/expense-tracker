@@ -1,25 +1,21 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db/database');
+const User = require('./User');
 
 const Expense = sequelize.define('Expense', {
-    // id: {
-    //     type: Sequelize.INTEGER,
-    //     autoIncrement: true,
-    //     allowNUll: false,
-    //     primaryKey: true,
-    //   },
-    amount: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-    },
-    details: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    category: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  });
+
+  amount: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  details: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  category: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+});
 
 module.exports = Expense;
