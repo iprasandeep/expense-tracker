@@ -27,6 +27,8 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.6.0",
     "nodemon": "^3.0.1",
-    "sequelize": "^6.32.1"
+    "razorpay": "^2.9.2",
+    "sequelize": "^6.32.1",
+    "uuidv4": "^6.2.13"
   }
 }

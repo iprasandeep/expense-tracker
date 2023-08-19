@@ -6,6 +6,9 @@ const Expense = require('./models/Expense');
 const authenticateUser = require('./utils/authentication');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Order = require('./models/Order');
+const Razorpay = require('razorpay');
+const { v4: uuidv4 } = require('uuid')
 
 const userRoutes = require('./routes/userRoutes');
 const expenseRoutes = require('./routes/expenseRoutes');
@@ -22,6 +25,11 @@ app.use(express.static('views'));
 
 Expense.belongsTo(User, { foreignKey: 'UserId', onDelete: 'SET NULL', onUpdate: 'CASCADE' });
 User.hasMany(Expense, { foreignKey: 'UserId', onDelete: 'SET NULL', onUpdate: 'CASCADE' });
+
+// paymtne db
+User.hasMany(Order, { foreignKey: 'UserId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Order.belongsTo(User, { foreignKey: 'UserId' });
+
 
 (async () => {
   await sequelize.sync({ force: false });
@@ -78,6 +86,7 @@ app.post('/login', async (req, res) => {
 app.post('/addExpense', authenticateUser, async (req, res) => {
   const userId = req.user.id;
   const { amount, details, category } = req.body;
+  console.log("Categry:", category);
 
   try {
     const expense = await Expense.create({
@@ -87,6 +96,7 @@ app.post('/addExpense', authenticateUser, async (req, res) => {
       UserId: userId 
     });
     return res.status(201).json({ success: true, expense });
+    // console.log("Category:", expense.category);
   } catch (error) {
     return res.status(500).json({ success: false, message: 'An error occurred' });
   }
@@ -97,6 +107,7 @@ app.get('/expenses', authenticateUser, async (req, res) => {
   try {
     const expenses = await Expense.findAll({ where: { UserId: userId } });
     return res.status(200).json(expenses);
+   
   } catch (error) {
     return res.status(500).json({ success: false, message: 'An error occurred' });
   }
@@ -116,9 +127,88 @@ app.post('/deleteExpense', authenticateUser, async (req, res) => {
     return res.status(500).json({ success: false, message: 'An error occurred' });
   }
 });
-// route
-// app.use('/user', userRoutes);
-// app.use('/expenses', expenseRoutes);
+
+//payment
+const razorpay = new Razorpay({
+  key_id: process.env.KEY_ID,
+  key_secret: process.env.KEY_SECRET,
+});
+
+app.post('/buyPremium', authenticateUser, async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+ 
+    const user = await User.findByPk(userId);
+    if (user.premiumUser) {
+      return res.status(400).json({ message: "You're already a premium member" });
+    }
+    const orderId = uuidv4();
+
+    const order = await razorpay.orders.create({
+      amount: 1000, 
+      currency: 'INR',
+      receipt: orderId,
+      payment_capture: 1 
+    });
+    await Order.create({
+      UserId: userId,
+      orderId,
+      status: 'PENDING'
+    });
+
+    res.json("OK");
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+app.post('/premium_membership', authenticateUser, async (req, res) => {
+  const userId = req.user.id;
+  const { paymentId } = req.body;
+
+  try {
+    let status = 'PENDING';
+    if (paymentId) {
+      status = 'SUCCESS';
+    }
+    await Order.update({ status, paymentId }, {
+      where: {
+        UserId: userId,
+        status: 'PENDING'
+      }
+    });
+
+    if (status === 'SUCCESS') {
+      await User.update({ premiumUser: true }, {
+        where: {
+          id: userId
+        }
+      });
+    }
+
+    const token = jwt.sign({ id: userId, premiumUser: status === 'SUCCESS' }, secretKey);
+
+    res.status(200).json({ message: 'Payment status updated', token });
+  } catch (error) {
+    console.error('Error updating premium membership:', error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+app.get('/getUserPremiumStatus', authenticateUser, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findByPk(userId);
+
+    res.status(200).json({ isPremiumMember: user.premiumUser });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'An error occurred' });
+  }
+});
+
 
 const port = 3000;
 app.listen(port, () => {
