@@ -26,10 +26,4 @@ const User = sequelize.define('User', {
 });
 
 
-// User.prototype.generateAuthToken = function() {
-//   const token = jwt.sign({ id: this.id }, 'fewfewrredsas');
-//   return token;
-// };
-
-
 module.exports = User;

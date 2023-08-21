@@ -1,23 +1,15 @@
-const { DataTypes } = require('sequelize');
+const Sequelize = require('sequelize');
 const sequelize = require('../db/database');
-// const User = require('./User');
 
-const Order = sequelize.define('Order', {
-  orderId: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  paymentId: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  status: {
-    type: DataTypes.ENUM('PENDING', 'SUCCESS', 'FAILURE'),
-    allowNull: false,
-    defaultValue: 'PENDING'
-  }
-});
-
-// Order.belongsTo(User); // Define the relationship between User and Order
-
+const Order = sequelize.define('Order',{
+    id:{
+        type:Sequelize.INTEGER,
+        allowNull:false,
+        primaryKey:true,
+        autoIncrement:true
+    },
+    paymentid:Sequelize.STRING,
+    orderid:Sequelize.STRING,
+    status:Sequelize.STRING
+})
 module.exports = Order;
