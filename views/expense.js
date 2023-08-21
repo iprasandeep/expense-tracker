@@ -1,16 +1,31 @@
 const expenseForm = document.getElementById('expense-form');
 const hamburgerIcon = document.querySelector(".hamburger-menu");
 const navbarLinks = document.querySelector(".navbar-links");
+const logoutLink = document.getElementById('logoutLink');
 
 hamburgerIcon.addEventListener("click", function () {
   navbarLinks.classList.toggle("active");
 });
 
+// logout 
+async function logout(e) {
+  e.preventDefault()
+  try {
+    const token = getCookie('token');
+    if (token) {
+      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      window.location.href = '/login.html';
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const token = getCookie('token');
     if (token) {
-      const response = await axios.get('/expenses', {
+      const response = await axios.get('/expense/expenses', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -37,7 +52,7 @@ async function addExpense(event) {
     const token = getCookie('token');
   
     try {
-      const response = await axios.post('/addExpense', expenseData, {
+      const response = await axios.post('/expense/addExpense', expenseData, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -69,7 +84,7 @@ function displayExpense(expense) {
 async function deleteExpense(expenseId) {
   try {
     const token = getCookie('token');
-    await axios.post('/deleteExpense', { id: expenseId }, {
+    await axios.post('expense/deleteExpense', { id: expenseId }, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -88,3 +103,5 @@ function getCookie(name) {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
+
+logoutLink.addEventListener('click', logout);

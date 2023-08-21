@@ -8,13 +8,13 @@ body {
     font-family: Arial, sans-serif;
   }
   
-  .signup-container {
+  .signup-container, .login-container {
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding:  0px 30px;
     width: 100%;
-    max-width: 400px;
+    max-width: 300px;
   }
   
   .page-title {
@@ -32,8 +32,9 @@ body {
   }
   
   .field-input {
-    width: 100%;
-    padding: 8px;
+    width:96%;
+    padding: 8px 4px;
+    /* text-align: center; */
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 10px;
@@ -46,6 +47,11 @@ body {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+  
   }
   
   .message {

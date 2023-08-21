@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
       const response = await axios.post("/login", { email, password });
-
+      console.log("Resposne Data: ", response);
       if (response.data.success) {
         messageElement.textContent = "Login successful"; 
         messageElement.style.color = "green";
@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.cookie = `token=${token}; expires=; path=/`;
         
         localStorage.setItem("token", response.data.token);
+        // set userId in localStorage
         window.location.href = "/expense.html";
         // setTimeout(() => {
         //   window.location.reload();

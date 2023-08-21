@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker - Expenses</title>
+  <link rel="stylesheet" href="expense.css">
+  <script src="https://kit.fontawesome.com/0a38976342.js" crossorigin="anonymous"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+  <div class="navbar-container">
+    <nav class="navbar">
+      <div class="navbar-brand"> <a class="nav-link" href="/expense.html">Expense Tracker</a></div>
+      <div class="navbar-links">
+        <a class="nav-link" href="/expense.html">Home</a>
+        <a href="#" id="reports" class="nav-link">Reports <i class="fa fa-diamond" aria-hidden="true"></i></a>
+        <a href="/leaderboard.html" id="leaderboard" class="nav-link" title="Buy Premium Membership To Access Leaderboard">Leaderboard <i class="fa fa-diamond" aria-hidden="true"></i></a>
+        <button  id="premium" class="nav-link navbar-button" >Premium Membership <i class="fa fa-diamond" aria-hidden="true"></i></button>
+        <button id="logoutLink" class="nav-link navbar-button">Logout</button>
+      </div>
+      <div class="hamburger-menu">
+        <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+  </div>
+
+  <div class="title">
+    <h3>Leaderboard</h3>
+    <div class="leaderboard_container">
+      <div class="leader_board_table">
+        <table class="leaderboard_table_details" id="leaderboard_list">
+          <thead class="leaderboard_table_heading">
+            <tr class="leaderboard_table_row">
+              <th>Name</th>
+              <th>Total Expenses</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- leaderboard detail will display here-->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+  <!-- <script src="expense.js"></script> -->
+  <script src="premium.js"></script>
+  <script src="leaderboard.js"></script>
+</body>
+</html>

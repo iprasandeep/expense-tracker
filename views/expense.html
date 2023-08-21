@@ -6,6 +6,7 @@
   <title>Expense Tracker - Expenses</title>
   <link rel="stylesheet" href="expense.css">
   <script src="https://kit.fontawesome.com/0a38976342.js" crossorigin="anonymous"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
   <div class="navbar-container">
@@ -13,10 +14,10 @@
       <div class="navbar-brand"> <a class="nav-link" href="/expense.html">Expense Tracker</a></div>
       <div class="navbar-links">
         <a class="nav-link" href="/expense.html">Home</a>
-        <a href="#" class="nav-link">Reports <i class="fa fa-diamond" aria-hidden="true"></i></a>
-        <a href="#" class="nav-link">Leaderboard <i class="fa fa-diamond" aria-hidden="true"></i></a>
-        <a href="https://rzp.io/l/YGDo5O8Xt" class="nav-link" id="buyPremium">Premium Membership <i class="fa fa-diamond" aria-hidden="true"></i></a>
-        <a href="#" class="nav-link">Logout</a>
+        <a class="nav-link" href="#" id="reports">Reports <i class="fa fa-diamond" aria-hidden="true"></i></a>
+        <a class="nav-link" href="/leaderboard.html" id="leaderboard"  title="Buy Premium Membership To Access Leaderboard">Leaderboard <i class="fa fa-diamond" aria-hidden="true"></i></a>
+        <button  id="premium" class="nav-link navbar-button" >Premium Membership <i class="fa fa-diamond" aria-hidden="true"></i></button>
+        <button id="logoutLink" class="nav-link navbar-button">Logout</button>
       </div>
       <div class="hamburger-menu">
         <i class="fas fa-bars"></i>
@@ -59,6 +60,6 @@
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
   <script src="expense.js"></script>
-  <script src="razorpay.js"></script>
+  <script src="premium.js"></script>
 </body>
 </html>
