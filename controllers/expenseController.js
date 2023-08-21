@@ -1,4 +1,5 @@
 const Expense = require('../models/Expense');
+const User = require('../models/User');
 
 const addExpense = async (req, res) => {
   const userId = req.user.id;
@@ -12,11 +13,16 @@ const addExpense = async (req, res) => {
       category,
       UserId: userId 
     });
-    return res.status(201).json({ success: true, expense });
-    // console.log("Category:", expense.category);
-  } catch (error) {
-    return res.status(500).json({ success: false, message: 'An error occurred' });
-  }
+      await User.increment('totalExpense', {
+        by: parseFloat(amount),
+        where: { id: userId }
+      });
+    
+      return res.status(201).json({ success: true, expense });
+    } catch (error) {
+      console.error('Error incrementing totalExpense:', error);
+      return res.status(500).json({ success: false, message: 'An error occurred' });
+    }
 };
 
 const getExpenses = async (req, res) => {

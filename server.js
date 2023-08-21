@@ -5,6 +5,7 @@ const User = require('./models/User');
 const sequelize = require('./db/database');
 const Expense = require('./models/Expense');
 const Order = require('./models/Order');
+const path = require('path');
 
 // routes
 const userRoutes = require('./routes/userRoutes');
@@ -29,7 +30,7 @@ User.hasMany(Order);
 Order.belongsTo(User);
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/login.html');
+  res.sendFile(path.join(__dirname, 'views', 'login.html'));
 });
 
 app.use('/',userRoutes);

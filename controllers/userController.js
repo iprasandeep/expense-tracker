@@ -40,7 +40,7 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign({ id: user.id }, secretKey); 
-    res.json({ success: true, redirectTo: '/expense.html', token });
+    res.json({ success: true, redirectTo: '/expenses', token });
   } catch (error) {
     console.error('Error querying database:', error);
     res.json({ success: false });
