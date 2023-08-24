@@ -10,9 +10,8 @@ const getExpenseLeaderboard = async (req, res) => {
       attributes: ['id', 'name', 'totalExpense'],
       order: [['totalExpense', 'DESC']],
     });
-
-    console.log('Leaderboard data:', leaderboard);
-    res.json(leaderboard);
+    // console.log('Leaderboard data:', leaderboard);
+    res.status(200).json(leaderboard);
   } catch (error) {
     console.error('Error querying leaderboard:', error);
     res.status(500).json({ error: 'Error querying leaderboard' });
