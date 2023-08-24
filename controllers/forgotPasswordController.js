@@ -20,7 +20,7 @@ async function forgotPassword(req, res) {
         const client=SibApiV3Sdk.ApiClient.instance
             
         const apiKey=client.authentications['api-key']
-        apiKey.apiKey='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'
+        apiKey.apiKey= process.env.SENDINBLUE_API_KEY
         
         const transEmailApi=new SibApiV3Sdk.TransactionalEmailsApi();
         const sender={
@@ -32,7 +32,6 @@ async function forgotPassword(req, res) {
                 email:email
             }
         ]
-
         const data= await transEmailApi.sendTransacEmail({
             sender,
             to:receivers,
