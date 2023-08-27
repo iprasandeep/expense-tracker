@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
       try {
         // const token = getCookie('token'); // Retrieve the token correctly
         const response = await axios.post(
-          "/password/forgotpassword",
+          "/forgotpassword/forgotPassword",
           { email },
   
         );
