@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker - Reports</title>
+  <link rel="stylesheet" href="report.css">
+  <link rel="stylesheet" href="expense.css">
+  <script src="https://kit.fontawesome.com/0a38976342.js" crossorigin="anonymous"></script>
+  <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
+</head>
+<body>
+  <div class="navbar-container">
+    <nav class="navbar">
+      <div class="navbar-brand"> <a class="nav-link" href="/expense.html">Expense Tracker</a></div>
+      <div class="navbar-links">
+        <a class="nav-link" href="/expense.html">Home</a>
+        <a href="#" id="reports" class="nav-link">Reports <i class="fa fa-diamond" aria-hidden="true"></i></a>
+        <a href="/leaderboard.html" id="leaderboard" class="nav-link" title="Buy Premium Membership To Access Leaderboard">Leaderboard <i class="fa fa-diamond" aria-hidden="true"></i></a>
+        <button  id="premium" class="nav-link navbar-button" >Premium Membership <i class="fa fa-diamond" aria-hidden="true"></i></button>
+        <button id="logoutLink" class="nav-link navbar-button">Logout</button>
+      </div>
+      <div class="hamburger-menu">
+        <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+  </div>
+
+  <div class="report-container">
+    <div class="report-table">
+      <h3 class="title">Yearly Report</h3>
+      <table class="report-table-details">
+        <thead class="table_heading">
+          <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Income</th>
+            <th>Expenses</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--report data here -->
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="report-table">
+      <h3 class="title">Monthly Report</h3>
+      <table class="report-table-details">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Income</th>
+            <th>Expenses</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--report data here -->
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="report-table">
+      <h3 class="title">Weekly Report</h3>
+      <table class="report-table-details">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Income</th>
+            <th>Expenses</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--report data here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+  <script src="reports.js"></script>
+</body>
+</html>
