@@ -9,7 +9,7 @@ hamburgerIcon.addEventListener("click", function () {
 
 // logout 
 async function logout(e) {
-  e.preventDefault()
+  e.preventDefault();
   try {
     const token = getCookie('token');
     if (token) {
@@ -20,6 +20,7 @@ async function logout(e) {
     console.error(error);
   }
 }
+
 // pagination logic
 let currentPage = 1;
 const expensesPerPage = 5;
@@ -37,47 +38,63 @@ function displayExpensesForPage(page) {
   }
 }
 
-function updatePagination() {
+function updatePagination(totalPages) {
   const prevButton = document.getElementById("prev-page");
   const nextButton = document.getElementById("next-page");
   const pageInfo = document.getElementById("page-info");
 
-  pageInfo.textContent = `Page ${currentPage}`;
+  pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
   prevButton.disabled = currentPage === 1;
-  nextButton.disabled = currentPage === Math.ceil(expenses.length / expensesPerPage);
+  nextButton.disabled = currentPage === totalPages;
 }
 
-function nextPage() {
-  if (currentPage < Math.ceil(expenses.length / expensesPerPage)) {
+function nextPage(totalPages) {
+  if (currentPage < totalPages) {
     currentPage++;
     displayExpensesForPage(currentPage);
-    updatePagination();
+    updatePagination(totalPages);
   }
 }
 
-function prevPage() {
+function prevPage(totalPages) {
   if (currentPage > 1) {
     currentPage--;
     displayExpensesForPage(currentPage);
-    updatePagination();
+    updatePagination(totalPages);
   }
 }
 
-//
-
 document.addEventListener("DOMContentLoaded", async () => {
+  let totalPages;
+
   try {
     const token = getCookie('token');
     if (token) {
-      const response = await axios.get('/expense/expenses', {
+      // total count of expenses for pagination calculation 
+      const totalCountResponse = await axios.get('/expense/totalCount', {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      expenses = response.data;
+      const totalCount = totalCountResponse.data.totalCount;
+
+      // calculating total number of pages
+      totalPages = Math.ceil(totalCount / expensesPerPage);
+
+      // fetching initial page of expenses
+      const response = await axios.get('/expense/expenses', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        params: {
+          page: currentPage,
+          limit: expensesPerPage
+        }
+      });
+      expenses = response.data.expenses;
 
       displayExpensesForPage(currentPage);
-      updatePagination();
+      updatePagination(totalPages); 
     }
   } catch (error) {
     console.error(error);
@@ -86,8 +103,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   expenseForm.addEventListener('submit', addExpense);
 
   // paginaton event listeners
-  document.getElementById("next-page").addEventListener("click", nextPage);
-  document.getElementById("prev-page").addEventListener("click", prevPage);
+  document.getElementById("next-page").addEventListener("click", () => nextPage(totalPages));
+  document.getElementById("prev-page").addEventListener("click", () => prevPage(totalPages));
 });
 
 async function addExpense(event) {
@@ -107,18 +124,26 @@ async function addExpense(event) {
       }
     });
 
+    // updating expenses array and pagination when adding a new expense
     expenses.unshift(response.data.expense);
+
+    const totalCountResponse = await axios.get('/expense/totalCount', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    const totalCount = totalCountResponse.data.totalCount;
+    const totalPages = Math.ceil(totalCount / expensesPerPage);
 
     currentPage = 1;
     displayExpensesForPage(currentPage);
-    updatePagination();
-    
+    updatePagination(totalPages);
+
     expenseForm.reset();
   } catch (error) {
     console.error('Error adding expense:', error);
   }
 }
-  
 
 function displayExpense(expense) {
   const expenseList = document.querySelector("#expense-list tbody");

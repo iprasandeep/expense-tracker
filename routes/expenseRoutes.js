@@ -6,6 +6,7 @@ const expenseController = require('../controllers/expenseController');
 
 router.post('/addExpense', authenticateUser, expenseController.addExpense);
 router.get('/expenses', authenticateUser, expenseController.getExpenses);
+router.get('/totalCount', authenticateUser, expenseController.getExpenses); 
 router.post('/deleteExpense', authenticateUser, expenseController.deleteExpense);
 
 

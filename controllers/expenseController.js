@@ -34,10 +34,19 @@ const addExpense = async (req, res) => {
 
 const getExpenses = async (req, res) => {
   const userId = req.user.id;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 5;
+  
   try {
-    const expenses = await Expense.findAll({ where: { UserId: userId } });
-    return res.status(200).json(expenses);
-   
+    const offset = (page - 1) * limit;
+    const expenses = await Expense.findAll({
+      where: { UserId: userId },
+      offset,
+      limit,
+    });
+    const totalCount = await Expense.count({ where: { UserId: userId } });
+    
+    return res.status(200).json({ expenses, totalCount });
   } catch (error) {
     return res.status(500).json({ success: false, message: 'An error occurred' });
   }
