@@ -36,8 +36,14 @@ User.hasMany(Order);
 Order.belongsTo(User);
 
 // user and forgot password relation
-User.hasMany(ForgotPassword);
-ForgotPassword.belongsTo(User);
+User.hasMany(ForgotPassword, {
+  foreignKey: 'userId',
+  onDelete: 'CASCADE', // If a user is deleted, delete associated Forgot entries
+});
+ForgotPassword.belongsTo(User, { foreignKey: 'userId' });
+
+
+
 app.use(express.static(path.join(__dirname, 'views')));
 
 

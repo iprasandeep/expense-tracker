@@ -42,11 +42,7 @@ body {
     /* border-collapse: collapse; */
   }
   
-  .table_heading{
-    /* width: auto;
-    color: red;
-    max-width: 100%; */
-  }
+
   .report-table-details th, .report-table-details td {
     padding: 10px;
     text-align: center;

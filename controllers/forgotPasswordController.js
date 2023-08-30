@@ -21,7 +21,7 @@ async function sendResetEmail(email, requestId) {
       to: receivers,
       subject: 'Reset Your Password',
       textcontent: 'Click the link below to reset your password:',
-      htmlContent: `Click the link below to reset your password: <a href="http://localhost:3022/reset-password/${requestId}">Reset Password</a>`,
+      htmlContent: `Click the link below to reset your password: <a href="http://localhost:3022/reset_password/${requestId}">Reset Password</a>`,
     });
   
     console.log(data);
@@ -37,7 +37,7 @@ async function sendResetEmail(email, requestId) {
   
       const requestId = uuidv4(); // Use UUID for the request
       const forgotPasswordRequest = await ForgotPassword.create({
-        userId: user.id,
+        userId: user.id, // Associate the user with the ForgotPassword entry
         requestId: requestId,
         isActive: true,
       });
