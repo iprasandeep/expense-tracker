@@ -211,3 +211,9 @@ th, td {
   background-color: #ffffff;
   cursor: pointer;
 }
+
+.pagination{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

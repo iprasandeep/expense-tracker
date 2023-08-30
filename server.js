@@ -64,7 +64,7 @@ app.use('/', resetPasswordRoute);
 (async () => {
   await sequelize.sync({ force: false });
   console.log('Connected to database and synced models');
-  const port = process.env.PORT || 3022;
+  const port = process.env.PORT || 3000;
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });
