@@ -20,10 +20,9 @@ async function logout(e) {
     console.error(error);
   }
 }
-
 // pagination logic
 let currentPage = 1;
-const expensesPerPage = 5;
+let expensesPerPage = 5; 
 let expenses = [];
 
 function displayExpensesForPage(page) {
@@ -63,14 +62,11 @@ function prevPage(totalPages) {
     updatePagination(totalPages);
   }
 }
-
 document.addEventListener("DOMContentLoaded", async () => {
   let totalPages;
-
   try {
     const token = getCookie('token');
     if (token) {
-      // total count of expenses for pagination calculation 
       const totalCountResponse = await axios.get('/expense/totalCount', {
         headers: {
           Authorization: `Bearer ${token}`
@@ -78,10 +74,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
       const totalCount = totalCountResponse.data.totalCount;
 
-      // calculating total number of pages
+     //total number of pages
       totalPages = Math.ceil(totalCount / expensesPerPage);
 
-      // fetching initial page of expenses
+      // initial page of expenses
       const response = await axios.get('/expense/expenses', {
         headers: {
           Authorization: `Bearer ${token}`
@@ -100,12 +96,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error(error);
   }
 
+  // expenses per page dropdown element
+  const expensesPerPageDropdown = document.getElementById('expenses-per-page');
+
+  //  user's preferred expenses per page from local storage
+  const storedExpensesPerPage = localStorage.getItem('expensesPerPage');
+  if (storedExpensesPerPage) {
+    expensesPerPageDropdown.value = storedExpensesPerPage;
+    expensesPerPage = parseInt(storedExpensesPerPage);
+  }
+
+  // changes in expenses per page dropdown
+  expensesPerPageDropdown.addEventListener('change', (event) => {
+    const selectedValue = event.target.value;
+    localStorage.setItem('expensesPerPage', selectedValue);
+    expensesPerPage = parseInt(selectedValue);
+    
+    // recalculating and updating pagination
+    totalPages = Math.ceil(expenses.length / expensesPerPage);
+    currentPage = 1;
+    displayExpensesForPage(currentPage);
+    updatePagination(totalPages);
+  });
+
   expenseForm.addEventListener('submit', addExpense);
 
-  // paginaton event listeners
+  // pagination event listeners
   document.getElementById("next-page").addEventListener("click", () => nextPage(totalPages));
   document.getElementById("prev-page").addEventListener("click", () => prevPage(totalPages));
 });
+
 
 async function addExpense(event) {
   event.preventDefault();

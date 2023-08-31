@@ -54,14 +54,25 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Added expenses will show here -->
+        <!-- expenses will show here -->
       </tbody>
     </table>
+
     <div class="pagination">
       <button id="prev-page" class="pagination-button" disabled>&laquo; Prev</button>
       <span id="page-info">Page 1</span>
       <button id="next-page" class="pagination-button">Next &raquo;</button>
     </div>
+    <div class="expenses-per-page-dropdown">
+      <label for="expenses-per-page">Expenses Per Page:</label>
+      <select id="expenses-per-page">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+      </select>
+    </div>
+    
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
