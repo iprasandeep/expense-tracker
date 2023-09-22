@@ -1,13 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const authenticateUser = require('../utils/authentication');
-const expenseController = require('../controllers/expenseController');
+import express from 'express';
+const { Router } = express;
+import authenticateUser from '../utils/authentication.js';
+import {addExpense, getExpenses,deleteExpense} from '../controllers/expenseController.js';
 
+const router = Router();
 
-router.post('/addExpense', authenticateUser, expenseController.addExpense);
-router.get('/expenses', authenticateUser, expenseController.getExpenses);
-router.get('/totalCount', authenticateUser, expenseController.getExpenses); 
-router.post('/deleteExpense', authenticateUser, expenseController.deleteExpense);
+router.post('/addExpense', authenticateUser, addExpense);
+router.get('/expenses', authenticateUser, getExpenses);
+router.get('/totalCount', authenticateUser, getExpenses);
+router.post('/deleteExpense', authenticateUser,deleteExpense);
 
-
-module.exports = router;
+export default router;

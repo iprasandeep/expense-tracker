@@ -1,6 +1,8 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-require('dotenv').config()
+import jwt from 'jsonwebtoken';
+import {User} from '../models/User.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const authenticateUser = async (req, res, next) => {
   try {
@@ -11,8 +13,8 @@ const authenticateUser = async (req, res, next) => {
 
     const token = authorizationHeader.replace('Bearer ', '');
     console.log('Token:', token);
-    const decoded = jwt.verify(token, process.env.SECRET_JWT_KEY); 
-    console.log('Decoded:', decoded);  
+    const decoded = jwt.verify(token, process.env.SECRET_JWT_KEY);
+    console.log('Decoded:', decoded);
     const user = await User.findOne({ where: { id: decoded.id } });
 
     if (!user) {
@@ -26,4 +28,4 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-module.exports = authenticateUser;
+export default authenticateUser;

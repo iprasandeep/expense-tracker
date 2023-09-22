@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express';
+import authenticateUser from '../utils/authentication.js';
+import {purchasePremium, updateTransaction} from '../controllers/purchasePremiumController.js';
+
 const router = express.Router();
-const authenticateUser = require('../utils/authentication');
-const premiumRoutes = require('../controllers/purchasePremiumController');
 
+router.get('/buypremium', authenticateUser, purchasePremium);
+router.post('/updatestatus', authenticateUser, updateTransaction);
 
-router.get('/buypremium',authenticateUser , premiumRoutes.purchasePremium);
-router.post('/updatestatus',authenticateUser, premiumRoutes.updateTransaction);
-
-module.exports = router;
+export default router;

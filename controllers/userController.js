@@ -1,30 +1,31 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-require('dotenv').config()
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import {User} from '../models/User.js';
+import dotenv from 'dotenv';
 
-const salt = bcrypt.genSaltSync(10);
-const secretKey = process.env.SECRET_JWT_KEY; // token secret key
+dotenv.config();
 
-const signup = async (req, res) => {
+const saltRounds = 10;
+const secretKey = process.env.SECRET_JWT_KEY;
 
-    const { name, email, password } = req.body;
-    
-    try {
-      const existingUser = await User.findOne({ where: { email } });
-      if (existingUser) {
-        return res.json({ success: false, message: 'User already exists' });
-      }
-      const hashedPassword = bcrypt.hashSync(password, salt);
-      await User.create({ name, email, password: hashedPassword });
-      res.json({ success: true });
-    } catch (error) {
-      console.error('Error creating user:', error);
-      res.json({ success: false });
+export const signup = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.json({ success: false, message: 'User already exists' });
     }
+    const hashedPassword = bcrypt.hashSync(password, saltRounds);
+    await User.create({ name, email, password: hashedPassword });
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.json({ success: false });
+  }
 };
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -39,18 +40,10 @@ const login = async (req, res) => {
       return res.json({ success: false, message: 'Wrong email or password' });
     }
 
-    const token = jwt.sign({ id: user.id }, secretKey); 
+    const token = jwt.sign({ id: user.id }, secretKey);
     res.json({ success: true, redirectTo: '/expenses', token });
   } catch (error) {
     console.error('Error querying database:', error);
     res.json({ success: false });
   }
 };
-
-module.exports = {
-  login,
-  signup
-};
-
-
-

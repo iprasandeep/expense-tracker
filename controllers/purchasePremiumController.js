@@ -1,8 +1,13 @@
-const Razorpay = require('razorpay');
-const Order = require('../models/Order');
-const User = require('../models/User');
+import Razorpay from 'razorpay';
+import Order from '../models/Order.js';
+import {User} from '../models/User.js';
 
-exports.purchasePremium = async (req, res) => {
+// const razorpay = new Razorpay({
+//   key_id: process.env.KEY_ID,
+//   key_secret: process.env.KEY_SECRET
+// });
+
+export const purchasePremium = async (req, res) => {
   console.log(process.env.KEY_ID)
   try{
       let rzp=new Razorpay({
@@ -30,7 +35,7 @@ exports.purchasePremium = async (req, res) => {
   }
 };
 
-exports.updateTransaction = async (req, res) => {
+export const updateTransaction = async (req, res) => {
   try {
     const payment_id = req.body.payment_id;
     const order_id = req.body.order_id;
@@ -63,3 +68,8 @@ exports.updateTransaction = async (req, res) => {
     res.json({ Error: err });
   }
 };
+
+export default {
+  purchasePremium,
+  updateTransaction
+}

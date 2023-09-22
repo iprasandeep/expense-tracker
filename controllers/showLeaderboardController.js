@@ -1,9 +1,7 @@
-const { Sequelize } = require('sequelize');
-const { Op } = require('sequelize');
-const User = require('../models/User');
-const Expense = require('../models/Expense')
+import {User} from '../models/User.js';
 
-const getExpenseLeaderboard = async (req, res) => {
+
+export const getExpenseLeaderboard = async (req, res) => {
   try {
     console.log('Fetching leaderboard data...');
     const leaderboard = await User.findAll({
@@ -18,6 +16,6 @@ const getExpenseLeaderboard = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   getExpenseLeaderboard,
 };

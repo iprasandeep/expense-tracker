@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Expense Tracker - Expenses</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" />
   <link rel="stylesheet" href="expense.css">
-  <script src="https://kit.fontawesome.com/0a38976342.js" crossorigin="anonymous"></script>
+  
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
@@ -13,7 +15,7 @@
     <nav class="navbar">
       <div class="navbar-brand"> <a class="nav-link" href="/expense.html">Expense Tracker</a></div>
       <div class="navbar-links">
-        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/expense.html">Home</a>
         <a class="nav-link" href="/reports.html" id="reports">Reports <i class="fa fa-diamond" aria-hidden="true"></i></a>
         <a class="nav-link" href="/leaderboard.html" id="leaderboard"  title="Buy Premium Membership To Access Leaderboard">Leaderboard <i class="fa fa-diamond" aria-hidden="true"></i></a>
         <button id="premium" class="nav-link navbar-button" >Premium Membership <i class="fa fa-diamond" aria-hidden="true"></i></button>
@@ -24,7 +26,11 @@
       </div>
     </nav>
   </div>
-  
+  <!-- <div id="popup" class="popup">
+    <p class="popup-title">Oops! You are not authorized to use this app. Please <a href="/login.html" class="btn">login</a>.</p>
+  </div> -->
+
+
   <div class="expense-form-container">
     <form id="expense-form">
       <label for="amount">Expense Amount:</label>
@@ -35,9 +41,11 @@
       
       <label for="category">Expense Category:</label>
       <select id="category" name="category" required>
-        <option value="groceries">Groceries</option>
-        <option value="utilities">Utilities</option>
+        <option value="food">Food</option>
+        <option value="trip & travels">Trip & Travels</option>
         <option value="entertainment">Entertainment</option>
+        <option value="groceries">Groceries</option>
+        <option value="internet bills">Internet Bills</option>
       </select>
       
       <button class="btn" type="submit" id="add-expense">Add Expense</button>
@@ -59,25 +67,32 @@
     </table>
 
     <div class="pagination">
-      <button id="prev-page" class="pagination-button" disabled>&laquo; Prev</button>
-      <span id="page-info">Page 1</span>
-      <button id="next-page" class="pagination-button">Next &raquo;</button>
+    <span class="drop-down-choices">
+      <!-- <label class="choices" for="expenses-per-page">Choose:</label> -->
+        <select class="choices-list" id="expenses-per-page" name="expenses-per-page">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
+        &nbsp;
+    </span>
+      
+      <button  class="pagination-btn" id="prev-page" class="pagination-button" disabled>&laquo; Prev</button>
+      <span  class="pages" id="page-info">Page 1</span>
+      <button  class="pagination-btn" id="next-page" class="pagination-button">Next &raquo;</button>
     </div>
-    <div class="expenses-per-page-dropdown">
-      <label for="expenses-per-page">Expenses Per Page:</label>
-      <select id="expenses-per-page">
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
-      </select>
-    </div>
+  </div>
     
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
 
+<!--  
+  <script src="axios.js"></script> -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <canvas id="myCanvas" width="300" height="150" willReadFrequently="true"></canvas>
   <script src="expense.js"></script>
+  <!-- <script src="https://checkout.razorpay.com/v1/checkout.js" nonce="WI9VhGtWyrOPu6EP5fgOjg=="></script> -->
+
   <script src="premium.js"></script>
 </body>
 </html>

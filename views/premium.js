@@ -5,7 +5,6 @@ const leaderboardLink = document.getElementById("leaderboard");
 const leaderboardIcon = leaderboardLink.querySelector('.fa');
 const purchaseIcon = premiumButton.querySelector(".fa");
 
-
 function updateReportsAccess(isPremiumUser) {
   if (isPremiumUser) {
     reportIcon.style.display = "none";
@@ -29,30 +28,31 @@ function updateLeaderboardAccess(isPremiumUser) {
 
 function updatePremiumButton(isPremiumUser) {
   if (isPremiumUser) {
-    premiumButton.textContent = "Premium Member"; 
-    premiumButton.style.color = "green"; 
+    premiumButton.textContent = "Premium Member";
+    premiumButton.style.color = "green";
     premiumButton.disabled = true;
-    purchaseIcon.style.display = "none"; 
+    purchaseIcon.style.display = "none";
   } else {
-   
     premiumButton.onclick = async (e) => {
       try {
         const token = getCookie('token');
-        console.log(token);
-
-        let response = await axios.get("/purchase/buypremium", { headers: { Authorization: `Bearer ${token}` } });
-        console.log(response);
-        let options = {
+        const response = await axios.get("/purchase/buypremium", { headers: { Authorization: `Bearer ${token}` } });
+        console.log("Razorpay Response:", response.data);
+        const options = {
           'key': response.data.key_id,
           "order_id": response.data.order.id,
           "handler": async function (response) {
-            let result = await axios.post("/purchase/updatestatus", {
-              order_id: options.order_id,
-              payment_id: response.razorpay_payment_id
-            }, { headers: { Authorization: `Bearer ${token}` } });
+            try {
+              const result = await axios.post("/purchase/updatestatus", {
+                order_id: options.order_id,
+                payment_id: response.razorpay_payment_id
+              }, { headers: { Authorization: `Bearer ${token}` } });
 
-            localStorage.setItem("token", result.data.token);
-            premium_success();
+              localStorage.setItem("token", result.data.token);
+              premium_success();
+            } catch (error) {
+              console.error("Error updating payment status:", error);
+            }
           },
         };
         const rzp1 = new Razorpay(options);
@@ -61,30 +61,31 @@ function updatePremiumButton(isPremiumUser) {
 
         rzp1.on("payment.failed", async () => {
           try {
-            let key = response.data.order.id;
-            let failed = await axios.post("/purchase/updatestatus", {
+            const key = response.data.order.id;
+            const failed = await axios.post("/purchase/updatestatus", {
               order_id: key,
               payment_id: null
-            }, { headers: { "Authentication": token } });
+            }, { headers: { Authorization: `Bearer ${token}` } });
             alert(failed.data.message);
-          } catch (e) {
-            console.log("Error in payment fail section", e);
+          } catch (error) {
+            console.error("Error in payment fail section", error);
           }
         });
 
-      } catch (err) {
-        console.log("Error in frontend of razorpay", err);
+      } catch (error) {
+        console.error("Error in frontend of razorpay", error);
       }
     };
   }
 }
-function  premium_success(){
-  alert(" You're premium member now!");
-  premiumButton.textContent = "Premium Member"; 
-  premiumButton.style.color = "green"; 
+
+function premium_success() {
+  alert("You're a premium member now!");
+  premiumButton.textContent = "Premium Member";
+  premiumButton.style.color = "green";
   premiumButton.disabled = true;
   purchaseIcon.style.display = "none";
-  reportIcon.style.display = "none"; 
+  reportIcon.style.display = "none";
   leaderboardIcon.style.display = "none";
 }
 

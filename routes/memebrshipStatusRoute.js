@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
+import authenticateUser from '../utils/authentication.js';
+import membershipStatus from '../controllers/membershipStatusController.js';
+
 const router = express.Router();
-const authenticateUser = require('../utils/authentication');
-const memebrshipCheck = require('../controllers/membershipStatusController');
 
-router.get('/memebrshipstatus',authenticateUser, memebrshipCheck.membershipStatus );
+router.get('/memebrshipstatus', authenticateUser, membershipStatus);
 
-module.exports = router;
+export default router;

@@ -1,22 +1,19 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../db/database');
-const jwt = require('jsonwebtoken');
-const Expense = require('./Expense');
-// const bcrypt = require('bcryptjs');
+import { DataTypes } from 'sequelize';
+import {sequelize} from '../db/database.js';
 
-const User = sequelize.define('User', {
+export const User = sequelize.define('User', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   totalExpense: {
     type: DataTypes.FLOAT,
@@ -26,8 +23,9 @@ const User = sequelize.define('User', {
   premiumUser: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    defaultValue: false
-  }
+    defaultValue: false,
+  },
+  
 });
 
-module.exports = User;
+export default User;

@@ -1,12 +1,15 @@
-// models/ForgotPassword.js
-const { DataTypes } = require('sequelize');
-const sequelize = require('../db/database');
+import { DataTypes } from 'sequelize';
+import {sequelize} from '../db/database.js';
 
-const ForgotPassword = sequelize.define('ForgotPassword', {
+export const ForgotPassword = sequelize.define('ForgotPassword', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
+  },
+  requestId: {
+    type: DataTypes.UUID, 
+    allowNull: false,
   },
   isActive: {
     type: DataTypes.BOOLEAN,
@@ -20,4 +23,3 @@ const ForgotPassword = sequelize.define('ForgotPassword', {
   },
 });
 
-module.exports = ForgotPassword;

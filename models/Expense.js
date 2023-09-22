@@ -1,12 +1,15 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../db/database');
-const User = require('./User');
+import {DataTypes } from 'sequelize';
+import {sequelize} from '../db/database.js';
 
-const Expense = sequelize.define('Expense', {
 
+export const Expense = sequelize.define('Expense', {
   amount: {
     type: DataTypes.FLOAT,
     allowNull: false,
+    validate: {
+      isFloat: true, 
+      min: 0, 
+    },
   },
   details: {
     type: DataTypes.STRING,
@@ -18,4 +21,5 @@ const Expense = sequelize.define('Expense', {
   },
 });
 
-module.exports = Expense;
+
+export default Expense;

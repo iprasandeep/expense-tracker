@@ -129,6 +129,12 @@ body {
   #expense-form button {
     flex-basis: 100%;
   }
+  .drop-down-choices{
+    position: relative; 
+    left: 0; 
+    /* border: 2px solid rgb(15, 175, 255); */
+    
+   }
 }
 
 table {
@@ -175,6 +181,7 @@ th, td {
   .navbar-brand{
     font-size: 18px;
   }
+
 }
 
 .delete-button {
@@ -216,4 +223,81 @@ th, td {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* position: absolute;
+  left: 40%; */
+  /* border: 1px solid red; */
+  /* max-width: 300px; */
+ 
+}
+
+.drop-down-choices{
+  position: relative; 
+  left: auto; 
+}
+.choices, .pages{
+  font-weight: 400;
+  color: rgb(26, 43, 1);
+  
+}
+
+.choices-list{
+  padding: 3px;
+  width: 3rem;
+  font-size: small;
+  border: 3px solid #88ff00;
+  border-radius: 3px;
+  
+}
+.pagination-btn{
+  padding: 5px;
+  width: 5rem;
+  margin: 5px;
+  border: none;
+  border-radius: 2px;
+  background: #88ff00;
+}
+
+/* report css */
+
+.total-expense{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cat{
+  text-transform: capitalize;
+}
+
+.title{
+  text-align: center;
+  margin: 20px;
+}
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  height: 30vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+.popup-title{
+  /* color: red; */
+  background-color: #ff5d5d65;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 20%;
+}
+.btn{
+  background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
 }
